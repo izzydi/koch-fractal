@@ -10,6 +10,11 @@
 .editor-wrap .editor::selection{background:rgba(105,160,244,.36);-webkit-text-fill-color:transparent}
 .editor-highlight{z-index:1;color:#d7eeff;pointer-events:none;scrollbar-width:none}
 .editor-highlight::-webkit-scrollbar{display:none}
+/* Synchronize the visible syntax layer with the real textarea caret. */
+.editor-wrap #highlightCode{display:block;font:inherit;line-height:inherit;letter-spacing:inherit;white-space:inherit;tab-size:inherit;word-spacing:inherit}
+.editor-wrap .editor,.editor-wrap .editor-highlight,.editor-wrap #highlightCode{font-family:Consolas,'Courier New',monospace;font-size:14px;font-weight:400;line-height:23.1px;letter-spacing:0;word-spacing:0;font-variant-ligatures:none}
+.editor-wrap .editor,.editor-wrap .editor-highlight{overflow-wrap:normal;word-break:normal;text-align:left}
+
 .py-comment{color:#6fbf73}.py-keyword{color:#c792ea}.py-string{color:#f6c177}.py-number{color:#f6a96b}.py-function{color:#75c7ff}.py-builtin{color:#80cbc4}.py-operator{color:#d7eeff}
 @media(max-width:850px){.editor-wrap{height:330px}}
 
