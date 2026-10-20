@@ -1,61 +1,304 @@
 <!doctype html>
 <html lang="el"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Εργαστήριο Fractals · Χιονονιφάδα Koch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@400..800&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#19314a;--muted:#60778b;--blue:#245ad5;--cyan:#00bdd4;--bg:#edf6ff;--paper:#fff;--line:#dce8f3;--green:#18784b}*{box-sizing:border-box}body{margin:0;color:var(--ink);font:16px/1.55 system-ui,-apple-system,'Segoe UI',sans-serif;background:linear-gradient(135deg,#edf6ff,#f5f0ff 65%,#fff)}button,input,textarea{font:inherit}button{cursor:pointer}header{padding:18px clamp(16px,4vw,70px);display:flex;align-items:center;justify-content:space-between;gap:15px;background:#ffffffd9;border-bottom:1px solid var(--line)}.brand{font-weight:850;display:flex;align-items:center;gap:9px}.brandicon{display:grid;place-items:center;background:#dbf8ff;color:#1762c7;border-radius:13px;width:42px;height:42px;font-size:25px}header small{color:var(--muted);font-weight:600}.layout{max-width:1340px;margin:auto;padding:30px 22px 55px}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:center;margin-bottom:24px}.eyebrow{font-size:12px;font-weight:850;letter-spacing:2px;text-transform:uppercase;color:var(--blue)}h1{font-size:clamp(34px,4.8vw,58px);line-height:1.08;letter-spacing:-1.6px;margin:10px 0 14px}h1 span{color:var(--blue)}.lead{color:var(--muted);font-size:18px;max-width:620px}.pill{display:inline-flex;padding:7px 12px;border-radius:99px;background:#e6f3ff;color:#22528d;font-weight:700;font-size:13px;margin:5px 5px 0 0}.hero-art{height:240px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 45%,#b9f1ff,#d9e6ff 57%,#e8e5ff);border-radius:28px;border:1px solid #d5e3ff}.hero-art svg{width:100%;height:100%}.section-title{font-size:25px;letter-spacing:-.5px;margin:0 0 15px}.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:28px}.step{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 7px 20px #2751800d}.number{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#e7eeff;color:var(--blue);font-weight:900}.step h3{margin:9px 0 4px;font-size:17px}.step p{margin:0;color:var(--muted);font-size:14px}.workspace{display:grid;grid-template-columns:1fr 1fr;gap:20px}.panel{min-width:0;background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 10px 25px #234f7a0c}.panel-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;border-bottom:1px solid var(--line)}.panel-header h2{margin:0;font-size:19px}.panel-header p{margin:0;color:var(--muted);font-size:13px}.code-guide{padding:13px 19px;background:#f0f7ff;color:#254465;font-size:13px;border-bottom:1px solid var(--line)}.code-guide code{font-weight:700}.editor{background:#101d32;color:#d7eeff;border:0;padding:20px;width:100%;height:510px;resize:vertical;font:14px/1.65 Consolas,'Courier New',monospace;tab-size:4;outline-offset:-3px}.editor:focus{outline:2px solid #70acff}.editor-top{background:#182b47;color:#abc5e5;padding:10px 18px;font-size:13px;display:flex;justify-content:space-between}.actions{padding:15px 18px;display:flex;gap:9px;flex-wrap:wrap;align-items:center}.primary{background:var(--blue);color:white;border:0;padding:11px 17px;border-radius:12px;font-weight:800}.primary:hover{background:#1344b2}.secondary{background:#edf4ff;color:#244676;border:1px solid #d2e0f3;padding:10px 14px;border-radius:12px;font-weight:700}.status{color:var(--muted);font-size:12px;padding:0 18px 15px;min-height:32px}.status.error{color:#b33139}.status.ok{color:var(--green)}.preview{height:380px;background:radial-gradient(circle at center,#fff,#f1f9ff);padding:14px;display:flex;align-items:center;justify-content:center}canvas{width:100%;height:100%}.controls{padding:18px 20px;display:grid;gap:10px;border-top:1px solid var(--line)}.range-label{display:flex;justify-content:space-between;gap:10px;font-weight:750;font-size:14px}input[type=range]{width:100%;accent-color:var(--blue)}.mini-row{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px}.callout{padding:14px 18px;border-top:1px solid var(--line);background:#f7fbff;font-size:14px;color:#35526e}.challenge{margin-top:26px;padding:24px;background:#132b52;border-radius:24px;color:#fff;display:flex;justify-content:space-between;gap:20px;align-items:center}.challenge h2{margin:0 0 5px;font-size:23px}.challenge p{margin:0;color:#cbdff9}.challenge button{background:#fff;color:#1a4c9a;border:0;border-radius:12px;padding:12px 18px;font-weight:800;white-space:nowrap}.hint{margin-top:10px;color:#586f84;font-size:14px}.hidden{display:none}footer{text-align:center;color:var(--muted);font-size:13px;margin-top:32px}@media(max-width:850px){.hero,.workspace{grid-template-columns:1fr}.hero-art{height:190px}.three{grid-template-columns:1fr}.challenge{align-items:flex-start;flex-direction:column}.layout{padding:18px 14px 35px}.editor{height:330px}}
+:root{
+  --ink:#1f2a5c;--muted:#4b5682;--paper:#ffffff;--grid:#e6eefa;
+  --red:#e0313b;--blue:#2c6fd6;--pink:#e2508c;--green:#3f9d58;--purple:#8a5cf0;--orange:#f08a1c;--teal:#1f9aa8;
+  --hl-yellow:#fff27a;--hl-green:#c9f4c0;--hl-pink:#ffd3e4;--hl-blue:#cfe6ff;--hl-orange:#ffe1b8;--hl-purple:#e8dcff;
+  --hand:'Playpen Sans','Comic Sans MS','Segoe Print',cursive;
+  --wobble:18px 26px 20px 24px / 24px 18px 26px 20px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);font:400 17px/1.6 var(--hand);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.sheet{max-width:1180px;margin:0 auto;padding:22px 18px 40px}
+
+/* Επικεφαλίδα φύλλου εργασίας */
+.sheet-head{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:stretch}
+.title-card{background:#fffbe8;border:3px solid var(--orange);border-radius:var(--wobble);padding:14px 22px}
+.title-card h1{margin:0;font-size:clamp(28px,4.2vw,46px);line-height:1.15;font-weight:800;letter-spacing:-.5px}
+.title-card h1 .t1{color:var(--red)}.title-card h1 .t2{color:var(--blue)}
+.title-card p{margin:6px 0 0;font-size:clamp(16px,2vw,21px);font-weight:600}
+.brand-card{background:#fff;border:3px solid var(--red);border-radius:16px 22px 18px 20px / 20px 16px 22px 18px;padding:10px 18px;text-align:center;display:flex;flex-direction:column;justify-content:center;min-width:200px}
+.brand-card strong{color:var(--red);font-size:28px;line-height:1.1;font-weight:800}
+.brand-card span{font-size:14px;line-height:1.35}
+.brand-card em{font-style:normal;color:var(--blue);font-weight:700;border-top:2px solid var(--red);margin-top:6px;padding-top:4px;font-size:14px}
+
+/* Ενότητες με αριθμημένο «αυτάκι» */
+.block{position:relative;background:var(--paper);border:3px solid var(--c,var(--pink));border-radius:var(--wobble);padding:0 22px 22px;margin-top:40px}
+.tab{position:relative;top:-24px;margin:0 0 -8px -6px;max-width:calc(100% + 6px);display:inline-flex;align-items:center;gap:10px;background:var(--tab,#ffe6ef);border:3px solid var(--c,var(--pink));border-radius:14px 20px 16px 18px;padding:2px 18px 2px 4px}
+.tab .num{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--c,var(--pink));color:#fff;font-weight:800;font-size:22px;border:3px solid #fff;margin:-8px 0 -8px -12px;box-shadow:0 0 0 3px var(--c,var(--pink))}
+.tab h2{margin:0;font-size:clamp(21px,2.6vw,29px);font-weight:800;line-height:1.3}
+.b-pink{--c:var(--pink);--tab:#ffe6ef}.b-green{--c:var(--green);--tab:#e3f7e4}.b-blue{--c:var(--blue);--tab:#e2eeff}.b-purple{--c:var(--purple);--tab:#efe6ff}.b-orange{--c:var(--orange);--tab:#fff0dc}
+
+/* Μαρκαδόροι υπογράμμισης */
+.hl{padding:0 .18em;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hl.y{background:linear-gradient(transparent 12%,var(--hl-yellow) 12% 90%,transparent 90%)}
+.hl.g{background:linear-gradient(transparent 12%,var(--hl-green) 12% 90%,transparent 90%)}
+.hl.p{background:linear-gradient(transparent 12%,var(--hl-pink) 12% 90%,transparent 90%)}
+.hl.b{background:linear-gradient(transparent 12%,var(--hl-blue) 12% 90%,transparent 90%)}
+.hl.o{background:linear-gradient(transparent 12%,var(--hl-orange) 12% 90%,transparent 90%)}
+.hl.v{background:linear-gradient(transparent 12%,var(--hl-purple) 12% 90%,transparent 90%)}
+code{font-family:Consolas,'Courier New',monospace;font-size:.92em;background:#f2f0ff;color:#5b3fb8;border-radius:5px;padding:1px 5px}
+
+/* Ενότητα 1 */
+.intro{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:start}
+.intro p{margin:0 0 12px}
+.figure{position:relative;padding-top:6px}
+.note{background:#ecfbe8;border:2px solid var(--green);border-radius:12px 16px 14px 18px;padding:8px 12px;font-size:14.5px;line-height:1.4;transform:rotate(-1.5deg);max-width:260px;margin-left:auto}
+.arrow{display:block;width:90px;height:46px;margin:-2px 0 -10px 40px}
+.flake-box{border:2px dashed #b9c8e6;border-radius:16px;background:#f8fbff;max-width:340px;margin:0 auto;padding:10px}
+.flake-box svg{display:block;width:100%;height:auto}
+.goals{margin-top:6px;border:2.5px dashed var(--purple);border-radius:14px 18px 16px 20px;background:#faf7ff;padding:12px 16px}
+.goals h3{margin:0 0 6px;color:var(--purple);font-size:20px}
+.goals ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.goals li{display:flex;gap:10px;align-items:baseline;font-size:15.5px;line-height:1.45}
+.goals li b{flex:none;color:var(--red);border:2px solid var(--red);border-radius:6px;padding:0 6px;font-size:14px;background:#fff}
+
+/* Ενότητα 2: βασικές ιδέες */
+.chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.chip{border:2.5px solid var(--cc);background:var(--cb);border-radius:10px 14px 12px 15px;padding:8px 10px;font-size:19px;font-weight:600;text-align:center;line-height:1.3}
+.chip small{display:block;font-size:13.5px;font-weight:500;color:var(--muted)}
+.c1{--cc:#f0a0b8;--cb:#ffeef4}.c2{--cc:#8fbbea;--cb:#eaf4ff}.c3{--cc:#b49be8;--cb:#f2ecff}.c4{--cc:#8fd09b;--cb:#ecfaee}.c5{--cc:#f3b46b;--cb:#fff4e6}.c6{--cc:#7fcbd3;--cb:#e8f9fb}
+
+/* Ενότητα 3: βήματα A/B/C */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.step{border:2.5px solid var(--sc);border-radius:16px 20px 14px 18px;padding:12px 14px 14px;background:#fff}
+.step-head{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.letter{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--sc);color:#fff;font-weight:800;font-size:20px}
+.step-head h3{margin:0;font-size:19px;line-height:1.25;background:var(--sh);border:2px solid var(--sc);border-radius:10px;padding:3px 10px}
+.step p{margin:6px 0 0;font-size:15.5px;line-height:1.5}
+.step svg{display:block;width:100%;height:auto;max-height:120px;margin:4px 0}
+.sA{--sc:var(--red);--sh:#ffeceb}.sB{--sc:var(--pink);--sh:#ffeaf2}.sC{--sc:var(--orange);--sh:#fff2df}
+
+/* Ενότητα 4: μαθηματικά */
+.math-lead{margin:0 0 14px}
+.math-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.math-item{border:2.5px solid var(--mc);border-radius:16px 20px 15px 19px;padding:14px 16px;background:#fff}
+.math-item h3{margin:0 0 6px;font-size:19px;line-height:1.3}
+.math-item h3 .q{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--mc);color:#fff;font-size:16px;margin-right:6px;vertical-align:1px}
+.math-item p{margin:6px 0;font-size:15.5px;line-height:1.5}
+.math-item svg{display:block;max-width:100%;margin:6px auto}
+.fbox{display:table;margin:8px auto;padding:6px 18px;border:2.5px solid var(--fc,#f2c94c);background:var(--fb,#fff8d6);border-radius:10px 13px 11px 14px;font-weight:700;font-size:20px;text-align:center;line-height:1.5}
+.fbox.blue{--fc:#8fbbea;--fb:#eaf4ff}.fbox.pink{--fc:#f0a0b8;--fb:#ffeef4}.fbox.green{--fc:#8fd09b;--fb:#ecfaee}
+.m1{--mc:#e0313b}.m2{--mc:#2c6fd6}.m3{--mc:#3f9d58}.m4{--mc:#8a5cf0}.m5{--mc:#f08a1c}.m6{--mc:#1f9aa8}
+.levels{display:grid;grid-template-columns:auto auto;gap:2px 14px;justify-content:center;margin:8px 0}
+.levels span:nth-child(odd){font-weight:600}
+.levels span:nth-child(even){font-weight:800;color:var(--blue)}
+.answer{display:table;margin:18px auto 0;border:3px solid var(--red);background:#fff2f3;border-radius:14px 18px 15px 19px;padding:8px 22px;color:var(--red);font-size:clamp(18px,2.3vw,24px);font-weight:800;text-align:center;line-height:1.4}
+.answer span{color:var(--ink);font-weight:600}
+.bridge{margin-top:16px;border:2.5px solid var(--teal);background:#e9f8fa;border-radius:14px 18px 15px 19px;padding:12px 16px;font-size:15.5px}
+.bridge strong{color:var(--teal)}
+.bridge p{margin:4px 0 0}
+
+/* Ενότητα 5: εργαστήριο */
+.lab-guide{margin:0 0 14px;font-size:15.5px}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{min-width:0;border:2.5px solid var(--pc);border-radius:16px 20px 15px 19px;background:#fff;overflow:hidden}
+.panel-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:10px 16px;background:var(--ph);border-bottom:2.5px solid var(--pc)}
+.panel-head h3{margin:0;font-size:20px}
+.panel-head p{margin:0;font-size:13.5px;color:var(--muted)}
+.tag{display:inline-block;border:2px solid var(--pc);background:#fff;border-radius:8px;padding:0 10px;font-size:14px;font-weight:700}
+.p-code{--pc:var(--purple);--ph:#f3edff}.p-draw{--pc:var(--blue);--ph:#eaf2ff}
 
 /* Επεξεργάσιμος κώδικας με χρωματισμό σύνταξης, όπως σε IDE. */
-.editor-wrap{position:relative;height:510px;background:#101d32;overflow:hidden}
-.editor-wrap .editor,.editor-highlight{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:20px;border:0;font:14px/1.65 Consolas,'Courier New',monospace;tab-size:4;white-space:pre;overflow:auto;box-sizing:border-box}
-.editor-wrap .editor{background:transparent;color:transparent;-webkit-text-fill-color:transparent;caret-color:#ffffff;resize:none;z-index:2;overflow:auto}
-.editor-wrap .editor::selection{background:rgba(105,160,244,.36);-webkit-text-fill-color:transparent}
-.editor-highlight{z-index:1;color:#d7eeff;pointer-events:none;scrollbar-width:none}
+.editor-wrap{position:relative;height:510px;background:#fdfdff;overflow:hidden;border-bottom:2px solid #ece6fb}
+.editor-wrap::before{content:"";position:absolute;top:0;bottom:0;left:10px;width:2px;background:#ffc6d4;z-index:0}
+.editor-wrap .editor,.editor-highlight{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:20px 20px 20px 24px;border:0;font:14px/1.65 Consolas,'Courier New',monospace;tab-size:4;white-space:pre;overflow:auto;box-sizing:border-box}
+.editor-wrap .editor{background:transparent;color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--ink);resize:none;z-index:2;overflow:auto;outline:none}
+.editor-wrap .editor:focus-visible{box-shadow:inset 0 0 0 3px var(--pink)}
+.editor-wrap .editor::selection{background:rgba(44,111,214,.22);-webkit-text-fill-color:transparent}
+.editor-highlight{z-index:1;color:var(--ink);pointer-events:none;scrollbar-width:none;background:transparent}
 .editor-highlight::-webkit-scrollbar{display:none}
 /* Synchronize the visible syntax layer with the real textarea caret. */
-.editor-wrap #highlightCode{display:block;font:inherit;line-height:inherit;letter-spacing:inherit;white-space:inherit;tab-size:inherit;word-spacing:inherit}
+.editor-wrap #highlightCode{display:block;font:inherit;line-height:inherit;letter-spacing:inherit;white-space:inherit;tab-size:inherit;word-spacing:inherit;background:none;color:inherit;padding:0;border-radius:0}
 .editor-wrap .editor,.editor-wrap .editor-highlight,.editor-wrap #highlightCode{font-family:Consolas,'Courier New',monospace;font-size:14px;font-weight:400;line-height:23.1px;letter-spacing:0;word-spacing:0;font-variant-ligatures:none}
 .editor-wrap .editor,.editor-wrap .editor-highlight{overflow-wrap:normal;word-break:normal;text-align:left}
+.py-comment{color:#2f8a4e}.py-keyword{color:#8e3fc4;font-weight:700}.py-string{color:#c4372f}.py-number{color:#d4690f}.py-function{color:#1f64c8}.py-builtin{color:#0f8a8f}.py-operator{color:var(--ink)}
 
-.py-comment{color:#6fbf73}.py-keyword{color:#c792ea}.py-string{color:#f6c177}.py-number{color:#f6a96b}.py-function{color:#75c7ff}.py-builtin{color:#80cbc4}.py-operator{color:#d7eeff}
-@media(max-width:850px){.editor-wrap{height:330px}}
+.actions{padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.actions button{font-size:15px}
+.primary{background:var(--purple);color:#fff;border:2.5px solid #5d3bb8;border-radius:12px 15px 12px 14px;padding:7px 14px;font-weight:800;box-shadow:0 3px 0 #5d3bb8}
+.primary:hover{background:#7748e0}.primary:active{transform:translateY(2px);box-shadow:0 1px 0 #5d3bb8}
+.primary:disabled{opacity:.6;cursor:wait}
+.secondary{background:#fff;color:var(--ink);border:2.5px solid #c9bdf0;border-radius:12px 14px 12px 15px;padding:6px 11px;font-weight:700}
+.secondary:hover{background:#f6f2ff}
+.status{color:var(--muted);font-size:14px;padding:0 16px 14px;min-height:32px}
+.status.error{color:#b3262f}.status.ok{color:#2c7a43}
+.preview{height:380px;background:#fff;padding:14px;display:flex;align-items:center;justify-content:center;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px}
+canvas{width:100%;height:100%}
+.controls{padding:14px 16px;display:grid;gap:8px;border-top:2px solid #e2ecfb}
+.range-label{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:16px}
+.range-label strong{display:inline-grid;place-items:center;min-width:34px;height:30px;border:2.5px solid var(--blue);border-radius:9px;color:var(--blue)}
+input[type=range]{width:100%;accent-color:var(--pink)}
+.mini-row{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:13px}
+.callout{padding:12px 16px;border-top:2px solid #e2ecfb;background:#fff9df;font-size:15px}
 
-.lesson-intro{margin:0 0 28px}.lesson-intro .intro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.lesson-card{background:white;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 7px 20px #2751800d}.lesson-card h3{margin:0 0 9px;font-size:20px}.lesson-card p{margin:8px 0;color:#344b63}.lesson-card .tag{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.6px}.math-lesson{background:white;border:1px solid var(--line);border-radius:24px;padding:24px;margin:0 0 30px}.math-lead{color:var(--muted);margin-top:-5px}.math-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.math-item{border:1px solid #dce8f3;border-radius:16px;background:#f7fbff;padding:17px}.math-item h3{margin:0 0 8px;font-size:17px}.math-item p{margin:7px 0;color:#334d68}.math-item code{background:#e8eefb;border-radius:4px;padding:2px 5px}.math-item svg{display:block;max-width:100%;margin:12px auto}.math-summary{margin-top:15px;padding:15px;border-radius:14px;background:#eaf4ff}.math-summary p{margin:6px 0}.math-item .worked{font-weight:750;color:#1c509c}.tip{font-weight:700;color:#285895!important}@media(max-width:850px){.lesson-intro .intro-grid,.math-grid{grid-template-columns:1fr}}
+/* Κάτω λωρίδα */
+.next{margin-top:26px;display:flex;align-items:center;gap:14px;background:#f1ecff;border:3px solid var(--purple);border-radius:14px 20px 16px 18px;padding:10px 16px}
+.next .go{flex:none;display:grid;place-items:center;width:46px;height:38px;background:#ffe35c;border:2.5px solid #d4a800;border-radius:9px 12px 10px 13px;font-size:22px}
+.next p{margin:0;font-size:clamp(16px,2vw,19px);font-weight:600}
+.next p b{color:var(--red)}
+footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
 
-/* Ζωντανή, παιχνιδιάρικη παλέτα για το σχολικό εργαστήριο */
-:root{--ink:#27335d;--muted:#596588;--blue:#6852d9;--cyan:#15bcca;--bg:#f7f3ff;--paper:#fff;--line:#e8dffa;--green:#16885b}
-body{background:radial-gradient(circle at 9% 8%,#ffe2ed 0,transparent 27%),radial-gradient(circle at 93% 20%,#d4f9ed 0,transparent 28%),radial-gradient(circle at 34% 90%,#fff2c8 0,transparent 28%),linear-gradient(145deg,#f9f2ff,#edf9ff 60%,#fff8ef)}
-header{background:#ffffffeb;border-bottom:3px solid #eee0ff}
-.brandicon{background:#fce1f1;color:#bd3f8d;transform:rotate(-8deg);box-shadow:0 4px 0 #f8b9df}
-.eyebrow{display:inline-block;background:#fff0b9;color:#79501e;padding:9px 13px;border-radius:999px;letter-spacing:1px;font-size:12px}
-h1 span{color:#ea4f99}.pill{background:#e5f8ff;color:#3152a3;border:1px solid #c6edfd}.pill:nth-of-type(3){background:#ffe8f3;color:#a83b77}.pill:nth-of-type(4){background:#e6f9dc;color:#3d7d43}
-.hero-art{background:radial-gradient(circle at 48% 40%,#fff7be,#cceaff 58%,#e4d2ff);border:3px solid #ffffff;box-shadow:0 13px 30px #704db01f}
-.section-title{color:#503799}.lesson-card,.step,.math-lesson,.panel{border:2px solid #eee4fc;box-shadow:0 10px 22px #654b9f12}
-.lesson-card:first-child{background:linear-gradient(150deg,#ffffff,#f2ebff)}.lesson-card:last-child{background:linear-gradient(150deg,#fff,#e7fcf8)}
-.lesson-card .tag{color:#a344b3}.step:nth-child(1){background:#fff0f7}.step:nth-child(2){background:#e8faff}.step:nth-child(3){background:#edfae5}
-.number{background:#fff;color:#a443a9;border:2px solid #eed5fc;border-radius:12px}
-.step:nth-child(2) .number{color:#098b9d;border-color:#b5ebf1}.step:nth-child(3) .number{color:#4a9443;border-color:#d1edbd}
-.math-lesson{background:linear-gradient(160deg,#ffffff,#fffcf2)}.math-item{background:#fff;border:2px solid #ebe2fa}
-.math-item:nth-child(6n+1){background:#fff2f7;border-color:#fad7e8}.math-item:nth-child(6n+2){background:#eafaff;border-color:#c9f0f8}.math-item:nth-child(6n+3){background:#f3ecff;border-color:#dfd0ff}.math-item:nth-child(6n+4){background:#fff8df;border-color:#f9e6a7}.math-item:nth-child(6n+5){background:#edfaed;border-color:#caeec9}.math-item:nth-child(6n+6){background:#fcefff;border-color:#f2d2fb}
-.math-summary{background:#e9f7fc;border:2px dashed #96d6e9}.math-item code{background:#ffffffbd;color:#6943af}
-.panel-header{background:linear-gradient(90deg,#f4eaff,#eafbff)}.code-guide{background:#fff5dc;color:#615031}
-.primary{background:#7854d8;box-shadow:0 4px 0 #4d35a4}.primary:hover{background:#6041b5}.secondary{background:#f2eafe;color:#56419c;border-color:#dfd0fa}.secondary:hover{background:#e6dcff}
-.preview{background:radial-gradient(circle,#fff,#e7f8ff 70%,#f1e7ff)}input[type=range]{accent-color:#e553a0}.callout{background:#e9fbf2;color:#32664f}
-button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #ea64ad;outline-offset:3px}
-@media(prefers-reduced-motion:no-preference){.step,.lesson-card,.math-item{transition:transform .18s ease,box-shadow .18s ease}.step:hover,.lesson-card:hover,.math-item:hover{transform:translateY(-3px);box-shadow:0 12px 24px #654b9f1b}}
+@media(max-width:850px){
+  .sheet-head,.intro,.workspace,.math-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brand-card{min-width:0}
+  .note{margin:0 auto}
+  .editor-wrap{height:340px}
+  .block{padding:0 14px 16px}
+  .tab{padding-right:12px}
+  .tab h2{font-size:20px}
+}
 </style></head>
-<body><header><div class="brand"><span class="brandicon">❄</span><span>Fractal Lab <small>· Εργαστήριο Μαθηματικών & Python</small></span></div><small>Γυμνάσιο · 1 διδακτική ώρα</small></header>
-<main class="layout"><section class="hero"><div><div class="eyebrow">ΜΑΘΑΙΝΩ · ΠΡΟΓΡΑΜΜΑΤΙΖΩ · ΔΗΜΙΟΥΡΓΩ</div><h1>Ζωγράφισε μια <span>χιονονιφάδα</span> με Python!</h1><p class="lead">Μπορεί μια απλή γραμμή να μεταμορφωθεί σε χιονονιφάδα; Ανακάλυψε πώς λίγοι κανόνες δημιουργούν ένα εντυπωσιακό <strong>fractal</strong>.</p><span class="pill">🐍 Python</span><span class="pill">📐 Γεωμετρία</span><span class="pill">✨ Δημιουργικότητα</span></div><div class="hero-art"><svg viewBox="0 0 500 230" aria-label="Διακοσμητική χιονονιφάδα Koch"><circle cx="250" cy="115" r="100" fill="none" stroke="#ffffff" stroke-width="2" opacity=".6"/><g id="hero-flake" fill="none" stroke="#2468cf" stroke-width="2.4" stroke-linejoin="round"/><g fill="#fff" opacity=".8"><circle cx="60" cy="40" r="3"/><circle cx="420" cy="35" r="4"/><circle cx="450" cy="170" r="3"/><circle cx="80" cy="177" r="4"/></g></svg></div></section>
-<section class="lesson-intro" aria-labelledby="what-is-fractal"><h2 class="section-title" id="what-is-fractal">Πρώτα, ας γνωρίσουμε τα fractals!</h2><div class="intro-grid"><article class="lesson-card"><span class="tag">01 · ΤΙ ΕΙΝΑΙ FRACTAL;</span><h3>Ένα σχέδιο που επαναλαμβάνει ένα μοτίβο</h3><p><strong>Fractal (φράκταλ)</strong> ονομάζουμε ένα γεωμετρικό σχήμα που παρουσιάζει πολύπλοκες λεπτομέρειες σε διαφορετικές κλίμακες. Πολλά fractals μοιάζουν με τον εαυτό τους όταν τα κοιτάμε πιο κοντά.</p><p>Φαντάσου ότι «ζουμάρεις» στο περίγραμμα μιας χιονονιφάδας και βλέπεις πάλι μικρές γωνίες σαν αυτές που είδες πριν. Αυτό λέγεται <strong>αυτοομοιότητα</strong>.</p><p>Στη φύση συναντάμε μορφές που θυμίζουν fractals, όπως σε ορισμένες φτέρες, στα κλαδιά δέντρων και σε ακτογραμμές. Δεν ακολουθούν πάντα τέλειους μαθηματικούς κανόνες.</p></article><article class="lesson-card"><span class="tag">02 · ΤΙ ΕΙΝΑΙ ΤΟ FRACTAL KOCH;</span><h3>Μια χιονονιφάδα από απλές γραμμές</h3><p>Το <strong>1904</strong>, ο Σουηδός μαθηματικός <strong>Χέλγκε φον Κοχ (Helge von Koch)</strong> περιέγραψε μια καμπύλη που δημιουργείται εφαρμόζοντας διαρκώς τον ίδιο κανόνα σε μια γραμμή.</p><p>Αν ξεκινήσουμε με <strong>ισόπλευρο τρίγωνο</strong> και εφαρμόσουμε αυτόν τον κανόνα σε όλες τις πλευρές του, σχηματίζεται η <strong>χιονονιφάδα Koch</strong>.</p><p>Το ενδιαφέρον είναι ότι ξεκινάμε από κάτι πολύ απλό —μια ευθεία— και με επανάληψη προκύπτει ένα περίπλοκο σχέδιο!</p></article></div></section>
-<h2 class="section-title">Πώς δημιουργείται η χιονονιφάδα Koch;</h2><section class="three"><article class="step"><span class="number">1</span><h3>Ξεκίνα με τρίγωνο</h3><p>Σχεδίασε ένα ισόπλευρο τρίγωνο: τρεις ίσες πλευρές.</p></article><article class="step"><span class="number">2</span><h3>Άλλαξε κάθε πλευρά</h3><p>Χώρισε κάθε ευθύγραμμο τμήμα σε τρία μέρη και αντικατάστησε το μεσαίο με δύο πλευρές ενός μικρού εξωτερικού τριγώνου.</p></article><article class="step"><span class="number">3</span><h3>Επανάλαβε τον κανόνα!</h3><p>Εφάρμοσε τον ίδιο κανόνα ξανά και ξανά. Αυτή είναι η <strong>αναδρομή</strong>.</p></article></section>
-<section class="math-lesson" aria-labelledby="math-title"><h2 class="section-title" id="math-title">📐 Τα Μαθηματικά πίσω από το σχέδιο — χωρίς άγχος!</h2><p class="math-lead">Δεν χρειάζεται να γνωρίζεις δύσκολους τύπους. Ξεκινάμε με μια γραμμή 90 μονάδων και εξηγούμε <strong>γιατί</strong> ο κώδικας κάνει κάθε υπολογισμό.</p><div class="math-grid">
-<article class="math-item"><h3>1. Γιατί διαιρούμε με το 3;</h3><p>Θέλουμε να χωρίσουμε τη γραμμή σε <strong>3 ίσα κομμάτια</strong>. Αν έχει μήκος 90, τότε κάθε κομμάτι έχει μήκος:</p><p class="worked">90 ÷ 3 = 30 μονάδες</p><svg viewBox="0 0 340 64" role="img" aria-label="Ευθύγραμμο τμήμα από 0 έως 90, χωρισμένο σε τρία ίσα τμήματα μήκους 30"><path d="M20 25 H320" stroke="#225bd4" stroke-width="5"/><g stroke="#1d3550" stroke-width="2"><path d="M20 17 V34 M120 17 V34 M220 17 V34 M320 17 V34"/></g><g fill="#19314a" font-size="12" text-anchor="middle"><text x="20" y="52">0</text><text x="120" y="52">30</text><text x="220" y="52">60</text><text x="320" y="52">90</text></g></svg><p><strong>Στον κώδικα:</strong> <code>dx = (x2 - x1) / 3</code>. Το <code>/ 3</code> σημαίνει «διαίρεσε με το 3».</p></article>
-<article class="math-item"><h3>2. Γιατί χρησιμοποιούμε τα σημεία 1/3 και 2/3;</h3><p>Το πρώτο σημείο είναι στα 30 και το δεύτερο στα 60. Αντικαθιστούμε το μεσαίο κομμάτι με <strong>δύο λοξές γραμμές</strong>, φτιάχνοντας μια μικρή «μύτη».</p><svg viewBox="0 0 340 94" role="img" aria-label="Από το A στο P, πάνω στην κορυφή K, κατόπιν στο Q και στο B, τέσσερα τμήματα"><polyline points="20,76 120,76 170,20 220,76 320,76" stroke="#225bd4" stroke-width="4" fill="none" stroke-linejoin="round"/><g fill="#19314a" font-size="13" text-anchor="middle"><text x="20" y="91">A</text><text x="120" y="91">P</text><text x="170" y="14">K</text><text x="220" y="91">Q</text><text x="320" y="91">B</text></g></svg><p><strong>Στον κώδικα:</strong> <code>p</code> είναι το 1/3, <code>q</code> τα 2/3 και <code>peak</code> η κορυφή.</p></article>
-<article class="math-item"><h3>3. Γιατί η γωνία είναι 60°;</h3><p>Η μικρή «μύτη» είναι <strong>ισόπλευρο τρίγωνο</strong>: έχει 3 ίσες πλευρές και 3 ίσες γωνίες, από <strong>60°</strong> η καθεμία.</p><p class="worked">60° + 60° + 60° = 180°</p><p>Έτσι ξέρουμε προς ποια κατεύθυνση ανεβαίνει το νέο σημείο. Δεν χρειάζεται ακόμη να υπολογίζεις μόνος σου τις συντεταγμένες.</p><p><strong>Στον κώδικα:</strong> η γραμμή <code>peak = (...)</code> βρίσκει τη νέα κορυφή.</p></article>
-<article class="math-item"><h3>4. Τι είναι η τετραγωνική ρίζα √3;</h3><p>Ο τύπος της κορυφής χρησιμοποιεί <code>sqrt(3)</code>, που σημαίνει <strong>√3</strong>, περίπου <strong>1,73</strong>.</p><p>Γιατί υπάρχει; Η <strong>κατακόρυφη απόσταση (ύψος)</strong> της κορυφής ενός ισόπλευρου τριγώνου εξαρτάται από το √3. Αυτό βοηθά τον υπολογιστή να τοποθετήσει σωστά την κορυφή, ακόμη και αν η γραμμή είναι λοξή.</p><p class="tip">Δεν χρειάζεται να απομνημονεύσεις τον τύπο. Αρκεί να καταλάβεις ότι προσδιορίζει πού θα μπει η κορυφή.</p></article>
-<article class="math-item"><h3>5. Γιατί κάθε γραμμή γίνεται 4;</h3><p>Κρατάμε το πρώτο τρίτο, προσθέτουμε <strong>2 πλευρές</strong> του μικρού τριγώνου και κρατάμε το τελευταίο τρίτο.</p><p class="worked">1 + 2 + 1 = 4 μικρότερες γραμμές</p><p>Άρα κάθε επανάληψη πολλαπλασιάζει τα τμήματα επί 4.</p><p><strong>Στον κώδικα:</strong> η <code>koch(...)</code> καλείται <strong>4 φορές</strong>, μία για κάθε καινούργια γραμμή.</p></article>
-<article class="math-item"><h3>6. Πόσες γραμμές έχουμε τελικά;</h3><p>Αρχίζουμε με <strong>3</strong> πλευρές, γιατί έχουμε τρίγωνο:</p><p class="worked">Επίπεδο 0: 3</p><p class="worked">Επίπεδο 1: 3 × 4 = 12</p><p class="worked">Επίπεδο 2: 12 × 4 = 48</p><p class="worked">Επίπεδο 3: 48 × 4 = 192</p><p>Το <code>LEVEL</code> λέει στην Python πόσες επαναλήψεις θα κάνει. Δεν χρειάζεται να μάθεις δυνάμεις για να βρεις τις πρώτες απαντήσεις!</p></article></div><div class="math-summary"><strong>🔗 Από τα Μαθηματικά στην Python</strong><p>Η Python δεν «μαντεύει» το σχέδιο: ακολουθεί τις οδηγίες μας. Το <code>/ 3</code> χωρίζει μια γραμμή, το <code>peak</code> βρίσκει τη μύτη και οι τέσσερις κλήσεις της <code>koch</code> επαναλαμβάνουν τον κανόνα. Τώρα είσαι έτοιμος να πειραματιστείς!</p></div></section>
-<section class="workspace"><article class="panel"><div class="panel-header"><div><h2>👩‍💻 Ο κώδικάς σου</h2><p>Διάβασε τα ελληνικά σχόλια (#) δίπλα σε κάθε εντολή.</p></div><span class="pill">main.py</span></div><div class="editor-top"><span>Python 3 · μέσω Pyodide</span><span>✏️ Επεξεργάσιμο</span></div><div class="code-guide"><strong>📖 Πώς διαβάζω τον κώδικα;</strong> Οι γραμμές με <code>#</code> εξηγούν τι κάνει κάθε εντολή. Ξεκίνα αλλάζοντας μόνο το <code>COLOR = "blue"</code> και το <code>LEVEL = 2</code>. Μετά πάτησε «Εκτέλεση Python».</div><div class="editor-wrap"><pre id="highlight" aria-hidden="true" class="editor-highlight"><code id="highlightCode"></code></pre><textarea class="editor" id="code" spellcheck="false" aria-label="Επεξεργαστής κώδικα Python" wrap="off"></textarea></div><div class="actions"><button class="primary" id="run">▶ Εκτέλεση Python</button><button class="secondary" id="reset">↺ Αρχικός κώδικας</button><button class="secondary" id="copy">⧉ Αντιγραφή</button></div><div id="status" class="status" role="status" aria-live="polite">Το σχέδιο εμφανίζεται αμέσως. Για εκτέλεση επεξεργασμένου Python απαιτείται σύνδεση στο διαδίκτυο.</div></article>
-<article class="panel"><div class="panel-header"><div><h2>❄ Το fractal σου</h2><p>Δοκίμασε διαφορετικά επίπεδα επανάληψης.</p></div><span class="pill" id="segmentBadge">48 τμήματα</span></div><div class="preview"><canvas id="canvas" aria-label="Οπτικοποίηση της χιονονιφάδας Koch"></canvas></div><div class="controls"><div class="range-label"><label for="level">Επίπεδο επανάληψης</label><strong id="levelText">2</strong></div><input id="level" type="range" min="0" max="5" value="2"/><div class="mini-row"><span>0 · Απλό τρίγωνο</span><span>5 · Πολλές λεπτομέρειες</span></div></div><div class="callout">💡 Κάθε νέα επανάληψη <strong>τετραπλασιάζει</strong> τα ευθύγραμμα τμήματα. Άλλαξε το επίπεδο ή τον κώδικα και παρατήρησε τη διαφορά.</div></article></section>
-<footer>Εκπαιδευτικό εργαστήριο · Fractals, γεωμετρία και υπολογιστική σκέψη · Χωρίς λογαριασμό</footer></main>
+<body><main class="sheet">
+
+<header class="sheet-head">
+  <div class="title-card">
+    <h1><span class="t1">Εργαστήριο Fractals –</span> <span class="t2">Χιονονιφάδα Koch</span></h1>
+    <p>Ζωγραφίζω ένα fractal με Python, βήμα-βήμα | 1 διδακτική ώρα</p>
+  </div>
+  <aside class="brand-card" aria-label="Fractal Lab">
+    <strong>Fractal Lab</strong>
+    <span>Μαθηματικά &amp; Python<br>για το Γυμνάσιο</span>
+    <em>Χωρίς λογαριασμό</em>
+  </aside>
+</header>
+
+<section class="block b-pink" aria-labelledby="s1">
+  <div class="tab"><span class="num">1</span><h2 id="s1">Τι είναι fractal;</h2></div>
+  <div class="intro">
+    <div>
+      <p><strong>Fractal (φράκταλ)</strong> ονομάζουμε ένα γεωμετρικό σχήμα που έχει <span class="hl y">πολύπλοκες λεπτομέρειες σε κάθε κλίμακα</span>. Αν «ζουμάρεις» σε ένα κομμάτι του, βλέπεις ξανά μικρά σχήματα σαν αυτά που είδες πριν. Αυτό λέγεται <span class="hl p">αυτοομοιότητα</span>.</p>
+      <p>Στη φύση συναντάμε μορφές που θυμίζουν fractals: στις <span class="hl g">φτέρες</span>, στα <span class="hl g">κλαδιά των δέντρων</span> και στις <span class="hl g">ακτογραμμές</span>. Δεν ακολουθούν πάντα τέλειους μαθηματικούς κανόνες, αλλά η ιδέα είναι η ίδια.</p>
+      <p>Το <span class="hl o">1904</span>, ο Σουηδός μαθηματικός <strong>Χέλγκε φον Κοχ (Helge von Koch)</strong> περιέγραψε μια καμπύλη που φτιάχνεται εφαρμόζοντας <span class="hl b">ξανά και ξανά τον ίδιο κανόνα</span> σε μια γραμμή. Αν ξεκινήσουμε από <span class="hl v">ισόπλευρο τρίγωνο</span>, παίρνουμε τη <strong>χιονονιφάδα Koch</strong>.</p>
+      <div class="goals">
+        <h3>Στόχοι του μαθήματος</h3>
+        <ol>
+          <li><b>Σ1</b><span>Να εξηγείς με δικά σου λόγια τι είναι fractal και τι σημαίνει αυτοομοιότητα.</span></li>
+          <li><b>Σ2</b><span>Να κατασκευάζεις τη χιονονιφάδα Koch βήμα-βήμα.</span></li>
+          <li><b>Σ3</b><span>Να διαβάζεις και να αλλάζεις έναν κώδικα Python που καλεί τον εαυτό του (αναδρομή).</span></li>
+          <li><b>Σ4</b><span>Να υπολογίζεις πόσα ευθύγραμμα τμήματα έχει κάθε επίπεδο.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="figure">
+      <p class="note">Ζούμαρε σε μια άκρη: θα βρεις ξανά τις ίδιες μικρές «μύτες»!</p>
+      <svg class="arrow" viewBox="0 0 90 46" aria-hidden="true"><path d="M70 4 C 60 30, 30 36, 12 38" fill="none" stroke="#3f9d58" stroke-width="2.5" stroke-linecap="round"/><path d="M22 30 L11 38.5 L24 43" fill="none" stroke="#3f9d58" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="flake-box"><svg viewBox="152 21 196 196" aria-label="Χιονονιφάδα Koch, επίπεδο 3"><g id="hero-flake" fill="none" stroke="#2c6fd6" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="block b-green" aria-labelledby="s2">
+  <div class="tab"><span class="num">2</span><h2 id="s2">Βασικές ιδέες</h2></div>
+  <div class="chips">
+    <div class="chip c1">Αρχή<small>ισόπλευρο τρίγωνο</small></div>
+    <div class="chip c2">÷ 3<small>κάθε τμήμα σε 3 ίσα</small></div>
+    <div class="chip c3">60°<small>η γωνία της «μύτης»</small></div>
+    <div class="chip c4">√3 ≈ 1,73<small>για το ύψος της μύτης</small></div>
+    <div class="chip c5">1 → 4<small>κάθε τμήμα γίνεται 4</small></div>
+    <div class="chip c6">LEVEL 0–5<small>πόσες επαναλήψεις</small></div>
+  </div>
+</section>
+
+<section class="block b-blue" aria-labelledby="s3">
+  <div class="tab"><span class="num">3</span><h2 id="s3">Πώς φτιάχνεται η χιονονιφάδα</h2></div>
+  <div class="steps">
+    <article class="step sA">
+      <div class="step-head"><span class="letter">A</span><h3>Ξεκίνα με τρίγωνο</h3></div>
+      <svg viewBox="0 0 200 120" aria-label="Ισόπλευρο τρίγωνο"><polygon points="45,100 155,100 100,4.7" fill="#ffeceb" stroke="#e0313b" stroke-width="3" stroke-linejoin="round"/></svg>
+      <p>Σχεδίασε ένα <span class="hl y">ισόπλευρο τρίγωνο</span>: τρεις ίσες πλευρές, τρεις γωνίες των 60°.</p>
+    </article>
+    <article class="step sB">
+      <div class="step-head"><span class="letter">B</span><h3>Άλλαξε κάθε πλευρά</h3></div>
+      <svg viewBox="0 0 200 120" aria-label="Ευθύγραμμο τμήμα με μύτη στο μεσαίο τρίτο"><polyline points="10,95 70,95 100,43 130,95 190,95" fill="none" stroke="#e2508c" stroke-width="3" stroke-linejoin="round"/><path d="M70 95 H130" stroke="#e2508c" stroke-width="2" stroke-dasharray="5 5"/></svg>
+      <p>Χώρισε την πλευρά σε <span class="hl p">3 ίσα κομμάτια</span>. Στη θέση του μεσαίου βάλε δύο πλευρές ενός μικρού τριγώνου.</p>
+    </article>
+    <article class="step sC">
+      <div class="step-head"><span class="letter">C</span><h3>Επανάλαβε τον κανόνα</h3></div>
+      <svg viewBox="0 0 200 120" aria-label="Χιονονιφάδα Koch, επίπεδο 2"><g id="mini-flake" fill="none" stroke="#f08a1c" stroke-width="2.4" stroke-linejoin="round"/></svg>
+      <p>Κάνε το ίδιο σε <span class="hl o">κάθε νέο τμήμα</span>, ξανά και ξανά. Αυτό λέγεται <strong>αναδρομή</strong>.</p>
+    </article>
+  </div>
+</section>
+
+<section class="block b-orange" aria-labelledby="s4">
+  <div class="tab"><span class="num">4</span><h2 id="s4">Τα μαθηματικά πίσω από το σχέδιο</h2></div>
+  <p class="math-lead">Δεν χρειάζεσαι δύσκολους τύπους. Ξεκινάμε με μια γραμμή <span class="hl y">90 μονάδων</span> και εξηγούμε <strong>γιατί</strong> ο κώδικας κάνει κάθε υπολογισμό.</p>
+  <div class="math-grid">
+    <article class="math-item m1"><h3><span class="q">1</span>Γιατί διαιρούμε με το 3;</h3>
+      <p>Θέλουμε <strong>3 ίσα κομμάτια</strong>. Αν η γραμμή έχει μήκος 90, κάθε κομμάτι έχει μήκος:</p>
+      <div class="fbox">90 ÷ 3 = 30 μονάδες</div>
+      <svg viewBox="0 0 340 64" role="img" aria-label="Ευθύγραμμο τμήμα από 0 έως 90, χωρισμένο σε τρία ίσα τμήματα μήκους 30"><path d="M20 25 H320" stroke="#2c6fd6" stroke-width="5" stroke-linecap="round"/><g stroke="#1f2a5c" stroke-width="2"><path d="M20 17 V34 M120 17 V34 M220 17 V34 M320 17 V34"/></g><g fill="#1f2a5c" font-size="13" text-anchor="middle" font-family="Playpen Sans, cursive"><text x="20" y="54">0</text><text x="120" y="54">30</text><text x="220" y="54">60</text><text x="320" y="54">90</text></g></svg>
+      <p><strong>Στον κώδικα:</strong> <code>dx = (x2 - x1) / 3</code>. Το <code>/ 3</code> σημαίνει «διαίρεσε με το 3».</p>
+    </article>
+    <article class="math-item m2"><h3><span class="q">2</span>Γιατί τα σημεία 1/3 και 2/3;</h3>
+      <p>Το πρώτο σημείο είναι στα 30 και το δεύτερο στα 60. Το μεσαίο κομμάτι γίνεται <strong>δύο λοξές γραμμές</strong>, μια μικρή «μύτη».</p>
+      <svg viewBox="0 0 340 100" role="img" aria-label="Από το A στο P, πάνω στην κορυφή K, κατόπιν στο Q και στο B, τέσσερα τμήματα"><polyline points="20,78 120,78 170,22 220,78 320,78" stroke="#e2508c" stroke-width="4" fill="none" stroke-linejoin="round"/><g fill="#1f2a5c" font-size="14" text-anchor="middle" font-family="Playpen Sans, cursive" font-weight="700"><text x="20" y="96">A</text><text x="120" y="96">P</text><text x="170" y="15">K</text><text x="220" y="96">Q</text><text x="320" y="96">B</text></g></svg>
+      <p><strong>Στον κώδικα:</strong> <code>p</code> είναι το 1/3, <code>q</code> τα 2/3 και <code>peak</code> η κορυφή.</p>
+    </article>
+    <article class="math-item m3"><h3><span class="q">3</span>Γιατί η γωνία είναι 60°;</h3>
+      <p>Η μικρή «μύτη» είναι <strong>ισόπλευρο τρίγωνο</strong>: 3 ίσες πλευρές και 3 ίσες γωνίες.</p>
+      <div class="fbox green">60° + 60° + 60° = 180°</div>
+      <p>Έτσι ξέρουμε προς ποια κατεύθυνση ανεβαίνει το νέο σημείο. Δεν χρειάζεται να υπολογίσεις μόνος σου τις συντεταγμένες.</p>
+      <p><strong>Στον κώδικα:</strong> η γραμμή <code>peak = (...)</code> βρίσκει τη νέα κορυφή.</p>
+    </article>
+    <article class="math-item m4"><h3><span class="q">4</span>Τι είναι η ρίζα √3;</h3>
+      <p>Ο τύπος της κορυφής χρησιμοποιεί <code>sqrt(3)</code>, δηλαδή την τετραγωνική ρίζα του 3:</p>
+      <div class="fbox blue">√3 ≈ 1,73</div>
+      <p>Το <strong>ύψος</strong> ενός ισόπλευρου τριγώνου εξαρτάται από το √3. Έτσι ο υπολογιστής βάζει την κορυφή στη σωστή θέση, ακόμη κι όταν η γραμμή είναι λοξή.</p>
+      <p>Δεν χρειάζεται να απομνημονεύσεις τον τύπο. Αρκεί να καταλάβεις τι κάνει.</p>
+    </article>
+    <article class="math-item m5"><h3><span class="q">5</span>Γιατί κάθε γραμμή γίνεται 4;</h3>
+      <p>Κρατάμε το πρώτο τρίτο, προσθέτουμε <strong>2 πλευρές</strong> του μικρού τριγώνου και κρατάμε το τελευταίο τρίτο:</p>
+      <div class="fbox pink">1 + 2 + 1 = 4</div>
+      <p><strong>Στον κώδικα:</strong> η <code>koch(...)</code> καλείται <strong>4 φορές</strong>, μία για κάθε νέα γραμμή.</p>
+    </article>
+    <article class="math-item m6"><h3><span class="q">6</span>Πόσες γραμμές έχουμε τελικά;</h3>
+      <p>Ξεκινάμε με <strong>3</strong> πλευρές και κάθε επίπεδο τις πολλαπλασιάζει επί 4:</p>
+      <div class="levels"><span>Επίπεδο 0</span><span>3</span><span>Επίπεδο 1</span><span>3 × 4 = 12</span><span>Επίπεδο 2</span><span>12 × 4 = 48</span><span>Επίπεδο 3</span><span>48 × 4 = 192</span></div>
+      <p>Το <code>LEVEL</code> λέει στην Python πόσες επαναλήψεις θα κάνει.</p>
+    </article>
+  </div>
+  <div class="answer">Συμπέρασμα: <span>κάθε επίπεδο τετραπλασιάζει τα τμήματα, 3 → 12 → 48 → 192</span></div>
+  <div class="bridge"><strong>Από τα μαθηματικά στην Python</strong><p>Η Python δεν «μαντεύει» το σχέδιο, ακολουθεί τις οδηγίες μας. Το <code>/ 3</code> χωρίζει μια γραμμή, το <code>peak</code> βρίσκει τη μύτη και οι τέσσερις κλήσεις της <code>koch</code> επαναλαμβάνουν τον κανόνα.</p></div>
+</section>
+
+<section class="block b-purple" aria-labelledby="s5">
+  <div class="tab"><span class="num">5</span><h2 id="s5">Γράψε και τρέξε Python</h2></div>
+  <p class="lab-guide">Οι γραμμές με <code>#</code> είναι σχόλια που εξηγούν κάθε εντολή. Ξεκίνα αλλάζοντας μόνο το <code>COLOR = "blue"</code> και το <code>LEVEL = 2</code>, και πάτησε <strong>«Εκτέλεση Python»</strong>.</p>
+  <div class="workspace">
+    <article class="panel p-code">
+      <div class="panel-head"><div><h3>Ο κώδικάς σου</h3><p>Python 3 στον browser, μέσω Pyodide</p></div><span class="tag">main.py</span></div>
+      <div class="editor-wrap"><pre id="highlight" aria-hidden="true" class="editor-highlight"><code id="highlightCode"></code></pre><textarea class="editor" id="code" spellcheck="false" aria-label="Επεξεργαστής κώδικα Python" wrap="off"></textarea></div>
+      <div class="actions"><button class="primary" id="run">▶ Εκτέλεση Python</button><button class="secondary" id="reset">↺ Αρχικός κώδικας</button><button class="secondary" id="copy">⧉ Αντιγραφή</button></div>
+      <div id="status" class="status" role="status" aria-live="polite">Το σχέδιο εμφανίζεται αμέσως. Για να τρέξει ο κώδικας Python που αλλάζεις, χρειάζεται σύνδεση στο διαδίκτυο.</div>
+    </article>
+    <article class="panel p-draw">
+      <div class="panel-head"><div><h3>Το fractal σου</h3><p>Δοκίμασε διαφορετικά επίπεδα επανάληψης.</p></div><span class="tag" id="segmentBadge">48 τμήματα</span></div>
+      <div class="preview"><canvas id="canvas" aria-label="Οπτικοποίηση της χιονονιφάδας Koch"></canvas></div>
+      <div class="controls"><div class="range-label"><label for="level">Επίπεδο επανάληψης</label><strong id="levelText">2</strong></div><input id="level" type="range" min="0" max="5" value="2"/><div class="mini-row"><span>0 · Απλό τρίγωνο</span><span>5 · Πολλές λεπτομέρειες</span></div></div>
+      <div class="callout">💡 Κάθε νέο επίπεδο <strong>τετραπλασιάζει</strong> τα ευθύγραμμα τμήματα. Άλλαξε το επίπεδο ή τον κώδικα και δες τη διαφορά.</div>
+    </article>
+  </div>
+</section>
+
+<div class="next"><span class="go" aria-hidden="true">➜</span><p><b>Πρόκληση:</b> Βάλε <code>COLOR = "red"</code> και <code>LEVEL = 3</code>. Πόσα τμήματα περιμένεις να δεις; Τρέξε τον κώδικα και έλεγξε την απάντησή σου!</p></div>
+
+<footer>Εκπαιδευτικό εργαστήριο για fractals, γεωμετρία και υπολογιστική σκέψη. Δεν χρειάζεται λογαριασμός.</footer>
+</main>
 <script>
 const initial = `# ΧΙΟΝΟΝΙΦΑΔΑ KOCH — ΜΑΘΑΙΝΩ PYTHON ΒΗΜΑ ΒΗΜΑ
 # Οι γραμμές που αρχίζουν με # είναι σχόλια.
@@ -154,10 +397,12 @@ updateHighlight();
 function kochJS(a,b,n){if(n===0)return [[a,b]];const dx=(b[0]-a[0])/3,dy=(b[1]-a[1])/3,p=[a[0]+dx,a[1]+dy],q=[a[0]+2*dx,a[1]+2*dy],peak=[p[0]+dx/2+Math.sqrt(3)*dy/2,p[1]+dy/2-Math.sqrt(3)*dx/2];return [...kochJS(a,p,n-1),...kochJS(p,peak,n-1),...kochJS(peak,q,n-1),...kochJS(q,b,n-1)]}
 function baseSegments(n){const h=Math.sqrt(3)/3,t=[[-1,-h],[1,-h],[0,2*h]];return t.flatMap((p,i)=>kochJS(p,t[(i+1)%3],n))}
 function draw(segments,color){const rect=canvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;canvas.width=Math.round(rect.width*ratio);canvas.height=Math.round(rect.height*ratio);const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);const w=rect.width,h=rect.height;if(!segments.length)return;const xs=segments.flatMap(s=>[s[0][0],s[1][0]]),ys=segments.flatMap(s=>[s[0][1],s[1][1]]);const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);const scale=Math.min((w-42)/Math.max(.0001,maxX-minX),(h-42)/Math.max(.0001,maxY-minY));ctx.translate(w/2,h/2);ctx.scale(scale,-scale);ctx.translate(-(minX+maxX)/2,-(minY+maxY)/2);ctx.beginPath();for(const [[x1,y1],[x2,y2]] of segments){ctx.moveTo(x1,y1);ctx.lineTo(x2,y2)}ctx.strokeStyle=color;ctx.lineWidth=2.2/scale;ctx.lineJoin='round';ctx.stroke();document.querySelector('#segmentBadge').textContent=segments.length.toLocaleString('el-GR')+' τμήματα';}
-let segments=baseSegments(2);function preview(n){levelText.textContent=n;segments=baseSegments(n);draw(segments,currentColor)}level.addEventListener('input',()=>{const n=Number(level.value);code.value=code.value.replace(/^LEVEL\s*=\s*\d+/m,'LEVEL = '+n);preview(n);updateHighlight();status.textContent='Προεπισκόπηση για επίπεδο '+n+' · Πάτησε Εκτέλεση για να τρέξει ο κώδικας Python.';status.className='status'});window.addEventListener('resize',()=>draw(segments,currentColor));preview(2);
-// Preview of embedded hero Koch polygon.
-{let path=baseSegments(3).map((s,i)=>`${i?'M':'M'} ${250+s[0][0]*75} ${119-s[0][1]*75} L ${250+s[1][0]*75} ${119-s[1][1]*75}`).join(' ');document.querySelector('#hero-flake').innerHTML='<path d="'+path+'"/>'}
-let pyodidePromise=null;function loadPython(){if(pyodidePromise)return pyodidePromise;status.textContent='Φόρτωση της Python… (μόνο την πρώτη φορά)';pyodidePromise=(async()=>{if(!window.loadPyodide){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';s.onload=resolve;s.onerror=()=>reject(new Error('Δεν είναι διαθέσιμη η σύνδεση με την Python.'));document.head.appendChild(s)})}return await window.loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/'})})();return pyodidePromise}
+let segments=baseSegments(2);function preview(n){levelText.textContent=n;segments=baseSegments(n);draw(segments,currentColor)}level.addEventListener('input',()=>{const n=Number(level.value);code.value=code.value.replace(/^LEVEL\s*=\s*\d+/m,'LEVEL = '+n);preview(n);updateHighlight();status.textContent='Προεπισκόπηση για επίπεδο '+n+'. Πάτησε «Εκτέλεση Python» για να τρέξει ο κώδικας.';status.className='status'});window.addEventListener('resize',()=>draw(segments,currentColor));preview(2);
+// Μικρά σχέδια της σελίδας: χιονονιφάδα επιπέδου 3 στην ενότητα 1 και επιπέδου 2 στο βήμα C.
+function flakePath(n,cx,cy,r){return baseSegments(n).map(s=>`M ${(cx+s[0][0]*r).toFixed(2)} ${(cy-s[0][1]*r).toFixed(2)} L ${(cx+s[1][0]*r).toFixed(2)} ${(cy-s[1][1]*r).toFixed(2)}`).join(' ')}
+document.querySelector('#hero-flake').innerHTML='<path d="'+flakePath(3,250,119,75)+'"/>';
+document.querySelector('#mini-flake').innerHTML='<path d="'+flakePath(2,100,62,46)+'"/>';
+let pyodidePromise=null;function loadPython(){if(pyodidePromise)return pyodidePromise;status.textContent='Φόρτωση της Python… (μόνο την πρώτη φορά)';pyodidePromise=(async()=>{if(!window.loadPyodide){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';s.onload=resolve;s.onerror=()=>reject(new Error('Δεν είναι διαθέσιμη η σύνδεση με την Python.'));document.head.appendChild(s)})}return await window.loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/'})})();pyodidePromise.catch(()=>{pyodidePromise=null});return pyodidePromise}
 document.querySelector('#run').addEventListener('click',async()=>{const btn=document.querySelector('#run');btn.disabled=true;status.className='status';try{const py=await loadPython();status.textContent='Εκτέλεση του κώδικα…';const result=await py.runPythonAsync(code.value+'\nimport json\njson.dumps({"segments": segments, "color": COLOR, "level": LEVEL})');const obj=JSON.parse(result);if(!Array.isArray(obj.segments)||obj.segments.length>13000)throw Error('Τα τμήματα πρέπει να είναι λίστα έως 13.000 στοιχείων.');if(typeof obj.color !== 'string' || !/^(red|blue|green|purple|orange|pink|yellow|black|white|cyan|magenta|brown|navy|teal|gold|gray|grey)$/i.test(obj.color))throw Error('Γράψε COLOR = \"red\" ή ένα άλλο όνομα χρώματος στα αγγλικά, π.χ. blue, green, purple.');segments=obj.segments;currentColor=obj.color;draw(segments,currentColor);if(Number.isInteger(obj.level)&&obj.level>=0&&obj.level<=5){level.value=obj.level;levelText.textContent=obj.level;}status.textContent='✓ Ο κώδικας Python εκτελέστηκε! Δημιουργήθηκαν '+segments.length+' τμήματα.';status.className='status ok'}catch(e){status.textContent='⚠ '+e.message;status.className='status error'}finally{btn.disabled=false}});
 document.querySelector('#reset').addEventListener('click',()=>{code.value=initial;level.value=2;currentColor='blue';preview(2);updateHighlight();status.textContent='Επαναφέρθηκε ο αρχικός κώδικας.';status.className='status'});document.querySelector('#copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(code.value);status.textContent='✓ Ο κώδικας αντιγράφηκε.';status.className='status ok'}catch{code.select();status.textContent='Επίλεξε τον κώδικα και πάτησε Ctrl+C.'}});
 </script></body></html>
