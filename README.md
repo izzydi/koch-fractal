@@ -2,6 +2,8 @@
 
 **[▶ Open the live lab](https://izzydi.github.io/koch-fractal/)**
 
+Lab 1 of **[Fractal Lab](https://izzydi.github.io/fractal-lab/)**. Next: [Menger sponge](https://izzydi.github.io/menger-sponge/).
+
 <img src="figures/koch_level4.png" width="220" align="right" alt="Koch snowflake, recursion level 4">
 
 An interactive maths and Python lab for Greek lower-secondary (Gymnasium) students, designed for a single lesson. Students read a commented Python program that draws the Koch snowflake, change the recursion level and colour, and run the code in the browser. No installation or account is needed.
